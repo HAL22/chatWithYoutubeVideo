@@ -1,0 +1,9 @@
+# Environments
+.myenv
+.venv
+myenv/
+venv/
+ENV/
+myenv.bak/
+myvenv.bak/
+.streamlit

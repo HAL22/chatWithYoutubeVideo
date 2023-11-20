@@ -14,6 +14,7 @@ from langchain.schema import Document
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 import streamlit as st
+import ffmpeg
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 

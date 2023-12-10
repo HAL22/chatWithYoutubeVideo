@@ -29,13 +29,13 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
     # Add user message to chat history
     user_ans = prompt
-    st.write(user_ans)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
 # Display assistant response in chat message container
 with st.chat_message("assistant"):
     message_placeholder = st.empty()
     full_response = ""
+    st.write(user_ans)
     if submitted and user_ans!=None and len(user_ans)>0:
         assistant_response = qa.qa_answer(user_ans)
     else:

@@ -127,7 +127,7 @@ def qa_answer(query):
     llm = OpenAI(model_name=model_name)
     chain = load_qa_chain(llm, chain_type="stuff")
 
-    os.write(1,f"Here's the query: {query}")
+    st.write(f"Here's the query: {query}")
 
     similar_docs_1 = get_similiar_docs(query,index,4,False)
 

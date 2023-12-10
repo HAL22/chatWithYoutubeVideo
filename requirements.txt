@@ -7,7 +7,6 @@ requests==2.31.0
 langchain==0.0.202
 langchainplus-sdk==0.0.10
 GitPython==3.1.31
-openai-whisper
 youtube-transcript-api
 pytube
 transformers

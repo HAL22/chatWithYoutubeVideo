@@ -121,17 +121,13 @@ def get_index():
     return load_pinecone("",400)
 
 def qa_answer(query):
-
-
-    if query == "" or query == " ":
-        return "No answer"
     index = get_index()
 
     model_name = "gpt-3.5-turbo"
     llm = OpenAI(model_name=model_name)
     chain = load_qa_chain(llm, chain_type="stuff")
 
-    print(f"Here's the query: {query}")
+    os.write(f"Here's the query: {query}")
 
     similar_docs_1 = get_similiar_docs(query,index,4,False)
 

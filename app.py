@@ -41,7 +41,7 @@ with st.chat_message("assistant"):
 
     else:
         assistant_response = "No answer"
-        st.write(len(user_ans)>0)
+        st.write(submitted)
 
     # Simulate stream of response with milliseconds delay
     for chunk in assistant_response.split():

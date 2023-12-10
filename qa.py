@@ -16,7 +16,6 @@ from langchain.vectorstores import Pinecone
 import streamlit as st
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
-from datasets import load_datase
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 

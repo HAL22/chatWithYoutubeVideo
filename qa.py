@@ -15,6 +15,8 @@ from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
+AudioFile = ""
+
 def get_pipeline():
 
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -45,6 +47,10 @@ def get_pipeline():
 
 def get_video_transcription(video_url):
     audio_file = YouTube(video_url).streams.filter(only_audio=True).first().download(filename="audio.mp4")
+
+    AudioFile = audio_file
+
+    st.markdown(AudioFile)
 
     pipe = get_pipeline()
 

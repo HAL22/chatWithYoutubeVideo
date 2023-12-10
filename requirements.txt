@@ -10,4 +10,6 @@ GitPython==3.1.31
 openai-whisper
 youtube-transcript-api
 pytube
-ffmpeg-python
+transformers
+torch
+accelerate

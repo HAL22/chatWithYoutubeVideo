@@ -15,50 +15,74 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 import streamlit as st
 import ffmpeg
+import torch
+from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
+from datasets import load_datase
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+
+def get_pipeline():
+
+    device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+
+    model_id = "openai/whisper-tiny-v3"
+
+    model = AutoModelForSpeechSeq2Seq.from_pretrained(
+    model_id, torch_dtype=torch_dtype, use_safetensors=True
+    )
+    model.to(device)
+
+    processor = AutoProcessor.from_pretrained(model_id)
+
+    return pipeline(
+    "automatic-speech-recognition",
+    model=model,
+    tokenizer=processor.tokenizer,
+    feature_extractor=processor.feature_extractor,
+    max_new_tokens=128,
+    chunk_length_s=30,
+    batch_size=16,
+    return_timestamps=True,
+    torch_dtype=torch_dtype,
+    device=device,
+    )
+
 
 def get_video_transcription(video_url):
     audio_file = YouTube(video_url).streams.filter(only_audio=True).first().download(filename="audio.mp4")
 
-    whisper_model = whisper.load_model("tiny")
+    pipe = get_pipeline()
 
-    transcription = whisper_model.transcribe(audio_file)
+    transcription = pipe(audio_file)
 
-    return transcription
+    return transcription["chunks"]
 
 
 
 def get_text_chunks_metadata(video_url,chunk_size=100):
-    transcription = get_video_transcription(video_url)
-    df = pd.DataFrame(transcription['segments'], columns=['start', 'end', 'text'])
+    chunks = get_video_transcription(video_url)
 
     texts = []
     metadata = []
-    row_size = df.shape[0]
+    size = len(chunks)
     i = 0
 
-    while i < row_size:
+    while i < size:
         text = ""
-        size_counter = 0
-        row = df.iloc[i]
-        start = math.floor(row['start'])
-        end = math.floor(row['end'])
-        while i < row_size and size_counter <= chunk_size:
-            row = df.iloc[i]
-            t = row['text']
-            end = math.floor(row['end'])
-            size_counter += len(t)
-            text = text + " " + t
+        chunk_size = 100
+        chunk_counter = 0
+        start = math.floor(chunks[i]["timestamp"][0])
+        end = math.floor(chunks[i]["timestamp"][1])
+        while i < size and chunk_counter <= chunk_size:
+            t =  chunks[i]["text"]
+            text = text+" "+t
+            end = math.floor(chunks[i]["timestamp"][1])
+            chunk_counter += len(t)
             i+=1
-    
         texts.append(text)
-        mData = {
-            "start":start,
-            "end": end
-        }
-        metadata.append(mData)
-
+        metadata.append({"start":start,"end":end})   
+    
     return texts, metadata
 
 

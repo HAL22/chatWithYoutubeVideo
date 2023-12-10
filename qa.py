@@ -1,6 +1,4 @@
 from pytube import YouTube
-import whisper
-import pandas as pd
 import math
 import tiktoken
 import os

@@ -5,11 +5,9 @@ import os
 import pinecone
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
-from langchain.llms import OpenAI
+from langchain import OpenAI
 from langchain.chains.question_answering import load_qa_chain
-from langchain.prompts import PromptTemplate
 from langchain.schema import Document
-from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 import streamlit as st
 import torch

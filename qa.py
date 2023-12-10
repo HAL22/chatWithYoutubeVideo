@@ -84,7 +84,8 @@ def get_text_chunks_metadata(video_url,chunk_size=100):
     return texts, metadata
 
 
-def load_pinecone(video_url,chunk_size=100,embeddings=OpenAIEmbeddings(model="text-embedding-ada-002")):
+def load_pinecone(video_url,chunk_size=100):
+    embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
     # initialize pinecone
     pinecone.init(
     api_key=st.secrets['PINECONE_API_KEY'],

@@ -33,7 +33,7 @@ if prompt := st.chat_input("What is up?"):
 with st.chat_message("assistant"):
     message_placeholder = st.empty()
     full_response = ""
-    if submitted:
+    if submitted and prompt!="":
         assistant_response = qa.qa_answer(prompt)
     else:
         assistant_response = ""

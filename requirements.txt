@@ -13,3 +13,4 @@ pytube
 transformers
 torch
 accelerate
+openai

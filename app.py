@@ -22,18 +22,20 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
+user_ans = ""
 if prompt := st.chat_input("What is up?"):
     # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
     # Add user message to chat history
+    user_ans = prompt
     st.session_state.messages.append({"role": "user", "content": prompt})
 
 # Display assistant response in chat message container
 with st.chat_message("assistant"):
     message_placeholder = st.empty()
     full_response = ""
-    if submitted and prompt!=None:
+    if submitted and user_ans!=None:
         assistant_response = qa.qa_answer(prompt)
     else:
         assistant_response = "No answer"

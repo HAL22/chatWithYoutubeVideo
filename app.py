@@ -36,9 +36,7 @@ with st.chat_message("assistant"):
     if submitted and prompt!=None:
         assistant_response = qa.qa_answer(prompt)
     else:
-        assistant_response = ""
-        assistant = "cvx"
-        assistant -= 1
+        assistant_response = "No answer"
 
     # Simulate stream of response with milliseconds delay
     for chunk in assistant_response.split():

@@ -75,3 +75,4 @@ pinecone-client
 streamlit==1.24.1
 streamlit-extras
 streamlit-chat
+ffmpeg-python

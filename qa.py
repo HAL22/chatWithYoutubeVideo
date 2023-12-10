@@ -121,6 +121,10 @@ def get_index():
     return load_pinecone("",400)
 
 def qa_answer(query):
+
+
+    if query == "" or query == " ":
+        return "No answer"
     index = get_index()
 
     model_name = "gpt-3.5-turbo"

@@ -149,7 +149,7 @@ def qa_answer(query):
 
     value = answer + "\n" + f"You can watch it from start {start} to {end}"
 
-    return value, start, end
+    return value
 
 
 

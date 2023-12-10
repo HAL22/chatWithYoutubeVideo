@@ -36,7 +36,7 @@ with st.chat_message("assistant"):
     message_placeholder = st.empty()
     full_response = ""
     if submitted and user_ans!=None:
-        assistant_response = qa.qa_answer(prompt)
+        assistant_response = qa.qa_answer(user_ans)
     else:
         assistant_response = "No answer"
 

@@ -127,8 +127,6 @@ def qa_answer(query):
     llm = OpenAI(model_name=model_name)
     chain = load_qa_chain(llm, chain_type="stuff")
 
-    st.write(f"Here's the query: {query}")
-
     similar_docs_1 = get_similiar_docs(query,index,4,False)
 
     similar_docs_2 = get_similiar_docs(query,index,4,True)
@@ -143,9 +141,7 @@ def qa_answer(query):
 
     answer = chain.run(input_documents= similar_docs_1 , question=query)
 
-    value = answer + "\n" + f"You can watch it from start {start} to {end}"
-
-    return value
+    return answer, start
 
 
 

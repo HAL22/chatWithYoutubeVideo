@@ -2,6 +2,12 @@ import streamlit as st
 import qa
 import time
 
+def get_video(start):
+    video_file = open('audio.mp4', 'rb')
+    video_bytes = video_file.read()
+
+    st.video(video_bytes,start_time=start)
+
 st.title("Query any Youtube video")
 
 submitted = False
@@ -20,6 +26,8 @@ if "messages" not in st.session_state:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+        if message["role"] == "assistant":
+            get_video(message["start"])
 
 # Accept user input
 user_ans = ""
@@ -37,11 +45,10 @@ with st.chat_message("assistant"):
     full_response = ""
     if user_ans!=None and len(user_ans)>0:
         st.write(user_ans)
-        assistant_response = qa.qa_answer(user_ans)
+        assistant_response,start = qa.qa_answer(user_ans)
 
     else:
         assistant_response = "No answer"
-        st.write(submitted)
 
     # Simulate stream of response with milliseconds delay
     for chunk in assistant_response.split():
@@ -50,7 +57,10 @@ with st.chat_message("assistant"):
         # Add a blinking cursor to simulate typing
         message_placeholder.markdown(full_response + "▌")
     message_placeholder.markdown(full_response)
+    get_video(start)
+
 # Add assistant response to chat history
-st.session_state.messages.append({"role": "assistant", "content": full_response})         
+st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})
+
 
           

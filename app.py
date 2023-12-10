@@ -29,6 +29,7 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
     # Add user message to chat history
     user_ans = prompt
+    st.write(user_ans)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
 # Display assistant response in chat message container

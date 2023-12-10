@@ -37,6 +37,7 @@ with st.chat_message("assistant"):
         assistant_response = qa.qa_answer(prompt)
     else:
         assistant_response = ""
+        zx.sv
 
     # Simulate stream of response with milliseconds delay
     for chunk in assistant_response.split():

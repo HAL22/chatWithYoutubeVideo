@@ -15,9 +15,9 @@ from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
-AudioFile = "/mount/src/chatwithyoutubevideo/audio.mp4"
-
 YouTubeId = ""
+
+YouTubeURL = ""
 
 def get_pipeline():
 
@@ -50,7 +50,11 @@ def get_pipeline():
 def get_video_transcription(video_url):
     video_file = YouTube(video_url).streams.filter(only_audio=False).first().download(filename="video.mp4")
 
+    global YouTubeId
     YouTubeId = YouTube(video_url).channel_id
+
+    global YouTubeURL
+    YouTubeURL = video_url
 
     pipe = get_pipeline()
 
@@ -153,3 +157,6 @@ def qa_answer(query):
     answer = chain.run(input_documents= similar_docs_1 , question=query)
 
     return answer, start
+
+def get_video(start):
+    st.video(YouTubeURL,start_time=start)

@@ -2,12 +2,6 @@ import streamlit as st
 import qa
 import time
 
-def get_video(start):
-    video_file = open('/mount/src/chatwithyoutubevideo/video.mp4', 'rb')
-    video_bytes = video_file.read()
-
-    st.video(video_bytes,start_time=start)
-
 st.title("Query any Youtube video")
 
 submitted = False
@@ -27,7 +21,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
         if message["role"] == "assistant":
-            get_video(message["start"])
+            qa.get_video(message["start"])
 
 # Accept user input
 user_ans = ""
@@ -62,8 +56,8 @@ with st.chat_message("assistant"):
         message_placeholder.markdown(full_response)
         get_video(start)
 
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})
+        # Add assistant response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})
 
 
           

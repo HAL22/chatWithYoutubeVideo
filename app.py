@@ -54,7 +54,7 @@ with st.chat_message("assistant"):
             # Add a blinking cursor to simulate typing
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
-        get_video(start)
+        qa.get_video(start)
 
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})

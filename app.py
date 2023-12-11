@@ -43,6 +43,7 @@ if prompt := st.chat_input("What is up?"):
 with st.chat_message("assistant"):
     message_placeholder = st.empty()
     full_response = ""
+    start = 0
     if user_ans!=None and len(user_ans)>0:
         st.write(user_ans)
         assistant_response,start = qa.qa_answer(user_ans)

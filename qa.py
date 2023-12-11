@@ -15,7 +15,7 @@ from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
-AudioFile = ""
+AudioFile = "/mount/src/chatwithyoutubevideo/audio.mp4"
 
 YouTubeId = ""
 
@@ -48,17 +48,13 @@ def get_pipeline():
 
 
 def get_video_transcription(video_url):
-    audio_file = YouTube(video_url).streams.filter(only_audio=True).first().download(filename="audio.mp4")
-
-    AudioFile = audio_file
+    video_file = YouTube(video_url).streams.filter(only_audio=False).first().download(filename="video.mp4")
 
     YouTubeId = YouTube(video_url).channel_id
 
-    st.markdown(AudioFile)
-
     pipe = get_pipeline()
 
-    transcription = pipe(audio_file)
+    transcription = pipe(video_file)
 
     return transcription["chunks"]
 
@@ -72,6 +68,7 @@ def get_text_chunks_metadata(video_url,chunk_size=100):
     size = len(chunks)
     i = 0
 
+    # Chunking algorithmn 
     while i < size:
         text = ""
         chunk_size = 100
@@ -156,8 +153,3 @@ def qa_answer(query):
     answer = chain.run(input_documents= similar_docs_1 , question=query)
 
     return answer, start
-
-
-
-
-

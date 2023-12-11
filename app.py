@@ -3,7 +3,7 @@ import qa
 import time
 
 def get_video(start):
-    video_file = open('audio.mp4', 'rb')
+    video_file = open('/mount/src/chatwithyoutubevideo/video.mp4', 'rb')
     video_bytes = video_file.read()
 
     st.video(video_bytes,start_time=start)

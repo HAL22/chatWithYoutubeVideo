@@ -9,7 +9,8 @@ with st.form(key='txt_input'):
     txt_input = st.text_area('Enter youtube url', '', height=80)
     submit_button = st.form_submit_button(label='Enter')
     if submit_button:
-        st.session_state['url'] = txt_input
+        if 'url' not in st.session_state:
+            st.session_state['url'] = txt_input
         qa.load_pinecone(txt_input,400)
         submitted = True
 

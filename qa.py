@@ -94,6 +94,7 @@ def get_text_chunks_metadata(video_url,chunk_size=100):
 def load_pinecone(video_url,chunk_size=100):
     global YouTubeURL
     YouTubeURL = video_url
+    st.markdown(YouTubeURL)
 
     embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
     # initialize pinecone

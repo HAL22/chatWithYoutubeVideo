@@ -17,6 +17,8 @@ os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
 AudioFile = ""
 
+YouTubeId = ""
+
 def get_pipeline():
 
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -49,6 +51,8 @@ def get_video_transcription(video_url):
     audio_file = YouTube(video_url).streams.filter(only_audio=True).first().download(filename="audio.mp4")
 
     AudioFile = audio_file
+
+    YouTubeId = YouTube(video_url).channel_id
 
     st.markdown(AudioFile)
 
@@ -93,8 +97,12 @@ def load_pinecone(video_url,chunk_size=100):
     api_key=st.secrets['PINECONE_API_KEY'],
     environment=st.secrets['PINECONE_ENV']
     )
-    index_name = st.secrets['PINECONE_NAME']
-
+    index_name = ""
+    if YouTubeId != None and YouTubeId != "" :
+        index_name = YouTubeId
+    else:
+        index_name = st.secrets['PINECONE_NAME']
+            
     if index_name not in pinecone.list_indexes():
          # we create a new index
         pinecone.create_index(

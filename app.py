@@ -50,17 +50,19 @@ with st.chat_message("assistant"):
     else:
         assistant_response = "No answer"
 
-    # Simulate stream of response with milliseconds delay
-    for chunk in assistant_response.split():
-        full_response += chunk + " "
-        time.sleep(0.05)
-        # Add a blinking cursor to simulate typing
-        message_placeholder.markdown(full_response + "▌")
-    message_placeholder.markdown(full_response)
-    get_video(start)
 
-# Add assistant response to chat history
-st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})
+    if user_ans!=None and len(user_ans)>0:
+        # Simulate stream of response with milliseconds delay
+        for chunk in assistant_response.split():
+            full_response += chunk + " "
+            time.sleep(0.05)
+            # Add a blinking cursor to simulate typing
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+        get_video(start)
+
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})
 
 
           

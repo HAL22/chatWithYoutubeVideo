@@ -165,4 +165,4 @@ def qa_answer(query):
 def get_video(start):
     global YouTubeURL
     st.markdown("here's the video"+YouTubeURL)
-    st.video(YouTubeURL,start_time=start)
+    st.video("https://www.youtube.com/watch?v=2G-HdtbO4CI&ab_channel=TheB1M",start_time=start)

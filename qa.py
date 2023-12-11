@@ -163,5 +163,6 @@ def qa_answer(query):
     return answer, start
 
 def get_video(start):
+    global YouTubeURL
     st.markdown("here's the video"+YouTubeURL)
     st.video(YouTubeURL,start_time=start)

@@ -9,6 +9,7 @@ with st.form(key='txt_input'):
     txt_input = st.text_area('Enter youtube url', '', height=80)
     submit_button = st.form_submit_button(label='Enter')
     if submit_button:
+        st.session_state['url'] = txt_input
         qa.load_pinecone(txt_input,400)
         submitted = True
 
@@ -21,7 +22,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
         if message["role"] == "assistant":
-            qa.get_video(message["start"])
+            qa.get_video(st.session_state['url'],message["start"])
 
 # Accept user input
 user_ans = ""
@@ -54,7 +55,7 @@ with st.chat_message("assistant"):
             # Add a blinking cursor to simulate typing
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
-        qa.get_video(start)
+        qa.get_video(st.session_state['url'],start)
 
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": full_response, "start":start})

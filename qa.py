@@ -17,8 +17,6 @@ os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 
 YouTubeId = ""
 
-YouTubeURL = ""
-
 def get_pipeline():
 
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -52,9 +50,6 @@ def get_video_transcription(video_url):
 
     global YouTubeId
     YouTubeId = YouTube(video_url).channel_id
-
-    global YouTubeURL
-    YouTubeURL = video_url
 
     pipe = get_pipeline()
 
@@ -92,10 +87,6 @@ def get_text_chunks_metadata(video_url,chunk_size=100):
 
 
 def load_pinecone(video_url,chunk_size=100):
-    global YouTubeURL
-    YouTubeURL = video_url
-    st.markdown(YouTubeURL)
-
     embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
     # initialize pinecone
     pinecone.init(
@@ -162,7 +153,5 @@ def qa_answer(query):
 
     return answer, start
 
-def get_video(start):
-    global YouTubeURL
-    st.markdown("here's the video"+YouTubeURL)
-    st.video("https://www.youtube.com/watch?v=2G-HdtbO4CI&ab_channel=TheB1M",start_time=start)
+def get_video(url,start):
+    st.video(url,start_time=start)
